@@ -1,0 +1,79 @@
+
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+
+<!--<link rel="import" href="mi-cuenta/mi-cuenta-baja.html">
+<link rel="import" href="mi-cuenta/mi-cuenta-datos-personales.html">
+<link rel="import" href="mi-cuenta/mi-cuenta-configuracion.html">-->
+
+
+<dom-module id="mi-cuenta-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-tab {
+        --paper-tab-ink: #66aaaa;
+      }
+      paper-tabs {        
+        --paper-tabs-selection-bar-color: #66aaaa;
+      }
+    </style>
+
+    <app-route
+      route="{{deepRoute}}"
+      pattern="/:tab"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+
+    <h1>mi-cuenta-page</h1>
+
+    <paper-tabs selected="{{data.tab}}" attr-for-selected="page">
+      <paper-tab page="datos-personales">Datos personales</paper-tab>
+      <paper-tab page="configuracion">Configuración</paper-tab>
+      <paper-tab page="baja">Baja</paper-tab>
+    </paper-tabs>
+    
+
+    <iron-pages selected="{{data.tab}}" attr-for-selected="page">
+      <mi-cuenta-datos-personales page="datos-personales"></mi-cuenta-datos-personales>
+      <mi-cuenta-configuracion page="configuracion"></mi-cuenta-configuracion>
+      <mi-cuenta-baja page="baja"></mi-cuenta-baja>
+      <mi-cuenta-view404 page="view404"></mi-cuenta-view404>
+    </iron-pages>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mi-cuenta-page',
+
+      properties: {
+        deepRoute: {
+          type: Object,
+          notify: true
+        }
+      },
+
+      observers: [
+        'ruta(data.tab)'
+      ],
+
+      ruta: function(tab) {
+        if(!tab) {
+          this.set('data.tab', 'configuracion');
+        }
+        if(tab) {
+          //this.importHref(this.resolveUrl('mi-cuenta/mi-cuenta-' + tab + '.html'), null, null, true);
+          var resolvedPageUrl = this.resolveUrl('mi-cuenta/mi-cuenta-' + tab + '.html');
+          this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        }
+      },
+
+      _showPage404: function() {
+        this.set('data.tab', 'view404');
+      }
+    });
+  </script>
+</dom-module>

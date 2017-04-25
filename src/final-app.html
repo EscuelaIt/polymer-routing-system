@@ -1,0 +1,75 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+
+
+<!--<link rel="import" href="pages/contacto-page.html">
+<link rel="import" href="pages/mi-cuenta-page.html">
+<link rel="import" href="pages/productos-page.html">-->
+
+
+<dom-module id="final-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .elemselected {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+    
+    <app-location route="{{route}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="/:page"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+
+    <iron-selector selected="[[data.page]]" attr-for-selected="page" selected-class="elemselected">
+      <a page="productos" href="/productos/">Productos</a>
+      <a page="mi-cuenta" href="/mi-cuenta/">Mi cuenta</a>
+      <a page="contacto" href="/contacto/">Contacto</a>
+    </iron-selector>
+
+    
+
+    <iron-pages selected="[[data.page]]" attr-for-selected="page">
+      <productos-page page="productos" deep-route="[[tail]]">productos</productos-page>
+      <mi-cuenta-page page="mi-cuenta" deep-route="{{tail}}">mi cuenta</mi-cuenta-page>
+      <contacto-page page="contacto">contacto</contacto-page>
+    </iron-pages>
+
+
+  </template>
+  <script>
+    Polymer({
+      is: 'final-app',
+      
+      properties: {
+        data: {
+          type: Object,
+        }
+      },
+
+      observers: [
+        'routeChanged(data.page)'
+      ],
+
+      routeChanged: function(page) {
+        console.log('routeChanged', page);
+        if(page) {
+          this.importHref(
+            this.resolveUrl('pages/' + page + '-page.html'), null, null, true);
+        }
+      }
+    });
+  </script>
+</dom-module>

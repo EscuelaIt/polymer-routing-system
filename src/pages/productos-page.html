@@ -1,0 +1,40 @@
+
+<dom-module id="productos-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <app-route
+      route="{{deepRoute}}"
+      pattern="/:idProd"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+
+    <h1>Productos</h1>
+    <div>
+      <a href="/productos/prod1">Producto 1</a>
+      <a href="/productos/prod17">Producto 17</a>
+      <a href="/productos/prod21">Producto 21</a>
+      <a href="/productos/prod133">Producto 133</a>
+    </div>
+
+    <div hidden="[[!data.idProd]]">
+      <p>El identificador del producto a visualizar es [[data.idProd]]</p>
+      <a href="/productos/">Volver</a>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'productos-page',
+
+      properties: {
+        deepRoute: Object
+      }
+    });
+  </script>
+</dom-module>

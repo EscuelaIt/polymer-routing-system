@@ -1,0 +1,55 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+
+<dom-module id="test-app-route">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h1>test-app-route</h1>
+    
+    <app-location route="{{route}}"></app-location>
+    <app-route
+      route="{{route}}"
+      pattern="/:page/:id"
+      data="{{data}}"
+      tail="{{tail}}">
+    </app-route>
+    <button on-tap="mostrarData">Data y tail a consola</button>
+    
+    
+    <button on-tap="mostrarRoute">route a consola</button>
+    <button on-tap="cambiarRoute">cambiar route</button>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'test-app-route',
+
+      properties: {
+        route: Object,
+        data: Object,
+        tail: Object
+      },
+
+      mostrarRoute: function() {
+        console.log(this.route);
+      },
+
+      cambiarRoute: function() {
+        this.set('route.path', '/otra/66');
+      },
+
+      mostrarData: function() {
+        console.log('Data:', this.data);
+        console.log('Tail:', this.tail);
+      },
+    });
+  </script>
+</dom-module>

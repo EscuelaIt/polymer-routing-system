@@ -1,0 +1,37 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/app-route/app-location.html">
+
+
+<dom-module id="test-app-location">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h1>test-app-location</h1>
+    <app-location route="{{route}}"></app-location>
+    <button on-tap="mostrarRoute">route a consola</button>
+    <button on-tap="cambiarRoute">cambiar route</button>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'test-app-location',
+
+      properties: {
+        route: Object
+      },
+
+      mostrarRoute: function() {
+        console.log(this.route);
+      },
+
+      cambiarRoute: function() {
+        this.set('route.path', '/otra/66');
+      },
+    });
+  </script>
+</dom-module>
